@@ -1,0 +1,102 @@
+9714898
+df.head(10)
+Out[3]: 
+          NPI NPPES_PROVIDER_ZIP NPPES_PROVIDER_STATE HCPCS_CODE  \
+0  1003000126          215021854                   MD      99239   
+1  1003000134          602011718                   IL      88381   
+2  1003000407          158251367                   PA      99231   
+3  1003000522          327255876                   FL      99213   
+4  1003000522          327255876                   FL      G0009   
+5  1003000522          327255876                   FL      G0439   
+6  1003000530              18951                   PA      99214   
+7  1003000829          802223311                   CO      97110   
+8  1003000936          292038005                   SC      93010   
+9  1003000936          292038005                   SC      93306   
+
+   LINE_SRVC_CNT  BENE_UNIQUE_CNT  total_Medicare_payment_amt  \
+0          271.0              231                    22682.70   
+1           19.0               18                      397.48   
+2           94.0               52                     2815.30   
+3          330.0              190                    14601.80   
+4          104.0              104                     2499.81   
+5           25.0               25                     2837.50   
+6          574.0              266                    41779.44   
+7          102.0               38                     1979.43   
+8         1100.0              786                     7050.84   
+9          213.0              191                    33706.02   
+
+   total_Medicare_allowed_amt  total_submitted_charge_amt  payment_ratio  
+0                    28931.96                    131435.0       0.784001  
+1                      507.11                      3401.0       0.783814  
+2                     3664.12                      8460.0       0.768343  
+3                    20586.09                     58605.0       0.709304  
+4                     2576.08                     14664.0       0.970393  
+5                     2895.50                      7466.0       0.979969  
+6                    65797.62                    100450.0       0.634969  
+7                     2599.40                      3818.8       0.761495  
+8                     9130.00                     24200.0       0.772272  
+9                    45488.28                    102453.0       0.740983  
+print("Shape of loaded data: ", df.shape)
+df.corr()
+Shape of loaded data:  (1000000, 10)
+Out[4]: 
+                                 NPI  LINE_SRVC_CNT  BENE_UNIQUE_CNT  \
+NPI                         1.000000       0.001281         0.000877   
+LINE_SRVC_CNT               0.001281       1.000000         0.362837   
+BENE_UNIQUE_CNT             0.000877       0.362837         1.000000   
+total_Medicare_payment_amt  0.001036       0.294219         0.475664   
+total_Medicare_allowed_amt  0.000892       0.284102         0.434391   
+total_submitted_charge_amt  0.000894       0.257562         0.543959   
+payment_ratio               0.001956       0.011015         0.029589   
+
+                            total_Medicare_payment_amt  \
+NPI                                           0.001036   
+LINE_SRVC_CNT                                 0.294219   
+BENE_UNIQUE_CNT                               0.475664   
+total_Medicare_payment_amt                    1.000000   
+total_Medicare_allowed_amt                    0.992848   
+total_submitted_charge_amt                    0.832634   
+payment_ratio                                -0.006007   
+
+                            total_Medicare_allowed_amt  \
+NPI                                           0.000892   
+LINE_SRVC_CNT                                 0.284102   
+BENE_UNIQUE_CNT                               0.434391   
+total_Medicare_payment_amt                    0.992848   
+total_Medicare_allowed_amt                    1.000000   
+total_submitted_charge_amt                    0.832902   
+payment_ratio                                -0.019212   
+
+                            total_submitted_charge_amt  payment_ratio  
+NPI                                           0.000894       0.001956  
+LINE_SRVC_CNT                                 0.257562       0.011015  
+BENE_UNIQUE_CNT                               0.543959       0.029589  
+total_Medicare_payment_amt                    0.832634      -0.006007  
+total_Medicare_allowed_amt                    0.832902      -0.019212  
+total_submitted_charge_amt                    1.000000      -0.004188  
+payment_ratio                                -0.004188       1.000000  
+
+print(df['total_submitted_charge_amt'].min())
+print(df['total_submitted_charge_amt'].max())
+df_no_outlier = df[np.abs(df['total_submitted_charge_amt']) - (df['total_submitted_charge_amt'].mean()) <= (3*df['total_submitted_charge_amt'].std())]
+df_no_outlier = df_no_outlier.reset_index(drop=True)
+print(df_no_outlier['total_submitted_charge_amt'].min())
+print(df_no_outlier['total_submitted_charge_amt'].max())
+0.11
+75346693.7215
+0.11
+721956.000008
+
+print (X_sc[0:10,:])
+[[ 1.81137845  0.06308048]
+ [-0.48595564  0.06131903]
+ [ 0.08691248 -0.08415326]
+ [ 1.30362956 -0.63927171]
+ [ 0.43269437  1.8156535 ]
+ [ 0.00833872  1.90569245]
+ [ 1.64236674 -1.3382204 ]
+ [-0.41311702 -0.1485405 ]
+ [ 0.74761676 -0.04721129]
+ [ 1.65477867 -0.34141175]]
+
+The average silhouette score is 0.408696687559
